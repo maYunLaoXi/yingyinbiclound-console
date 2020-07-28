@@ -22,6 +22,21 @@ export const databaseQuery = query => {
   return axios.request({
     method: 'POST',
     url: '/tencent/tcb/databasequery',
+    params: {
+      access_token: store.state.wxPersist.accessToken
+    },
+    data: {
+      env,
+      query
+    }
+  })
+}
+
+// update collection doucment
+export const updateDb = query => {
+  return axios.request({
+    method: 'POST',
+    url: '/tencent/tcb/databaseupdate',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     params: {
       access_token: store.state.wxPersist.accessToken
