@@ -33,7 +33,10 @@ export default {
   methods: {
     getData () {
       databaseQuery('db.collection("activity-data").get()').then(res => {
-        if (res.data.errcode !== 0) return
+        if (res.data.errcode !== 0) {
+          this.$Message.error('42001')
+          return
+        }
         let data = []
         res.data.data.forEach(item => {
           data.push(JSON.parse(item))
@@ -66,7 +69,7 @@ export default {
 }
 .box{
   background-color: #f9f9f9;
-      box-shadow: 2px 3px 5px rgba(0, 0, 0, .3);
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, .3);
   border: 1px solid palegoldenrod;
   margin: 5px 0;
   padding: 5px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="box" v-show="src" @click="close">
+  <div class="img-box" v-show="src" @click="close">
     <Icon type="md-close" size="30" color="#ffff" @click="close" />
     <img :src="src" alt="">
   </div>
@@ -26,7 +26,7 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-.box{
+.img-box{
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, .5);
