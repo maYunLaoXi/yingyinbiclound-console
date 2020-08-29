@@ -11,7 +11,6 @@ export default {
   },
   actions: {
     getAccessTokenFromApi ({ commit }) {
-      debugger
       getAccessToken().then(res => {
         commit('setAccessToken', res.data.access_token)
       })

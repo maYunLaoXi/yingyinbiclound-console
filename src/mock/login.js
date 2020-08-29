@@ -5,7 +5,7 @@ const USER_MAP = {
     user_id: '1',
     access: ['super_admin', 'admin'],
     token: 'super_admin',
-    avator: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
+    avator: 'https://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTL0msB8jbgywsOpnhwpBBiaibGriciam9qibUZpFe3zAibXcGAmMhstwOXLzcoxGHKtBkIJqCwfm66v1rzA/132'
   },
   admin: {
     name: 'admin',
@@ -18,6 +18,7 @@ const USER_MAP = {
 
 export const login = req => {
   req = JSON.parse(req.body)
+  if (req.password !== 'yingyinbi') return
   return { token: USER_MAP[req.userName].token }
 }
 

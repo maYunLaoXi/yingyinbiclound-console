@@ -87,10 +87,42 @@ export default [
         path: 'activity_page',
         name: 'activity',
         meta: {
-          icon: '_qq',
+          icon: 'md-camera',
           title: '活动'
         },
         component: _ => import('@/view/activity/activity.vue')
+      }
+    ]
+  },
+  {
+    path: '/activity_receive',
+    name: 'activityReceive',
+    component: Main,
+    children: [
+      {
+        path: 'activity_receive',
+        name: 'activityReceive',
+        meta: {
+          icon: 'md-camera',
+          title: '活动返图'
+        },
+        component: _ => import('@/view/activity-receive/activity-receive.vue')
+      }
+    ]
+  },
+  {
+    path: '/photography',
+    name: 'photography',
+    component: Main,
+    children: [
+      {
+        path: 'photography_class',
+        name: 'photographyClass',
+        meta: {
+          icon: 'md-aperture',
+          title: '摄影作品'
+        },
+        component: _ => import('@/view/photography-class/photography-class.vue')
       }
     ]
   },

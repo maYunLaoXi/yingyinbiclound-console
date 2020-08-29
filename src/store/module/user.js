@@ -10,6 +10,7 @@ import {
   getUnreadCount
 } from '@/api/user'
 import { setToken, getToken } from '@/libs/util'
+import { Message } from 'iview'
 
 export default {
   state: {
@@ -74,7 +75,7 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, { userName, password }) {
+    handleLogin ({ commit, dispatch }, { userName, password }) {
       userName = userName.trim()
       return new Promise((resolve, reject) => {
         login({
@@ -82,7 +83,12 @@ export default {
           password
         }).then(res => {
           const data = res.data
+          if (!data) {
+            Message.error('密码错误')
+            return
+          }
           commit('setToken', data.token)
+          dispatch('getAccessTokenFromApi')
           resolve()
         }).catch(err => {
           reject(err)
