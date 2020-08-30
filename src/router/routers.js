@@ -85,7 +85,7 @@ export default [
     children: [
       {
         path: 'activity_page',
-        name: 'activity',
+        name: 'activityPage',
         meta: {
           icon: 'md-camera',
           title: '活动'
@@ -96,7 +96,7 @@ export default [
   },
   {
     path: '/activity_receive',
-    name: 'activityReceive',
+    name: 'activityReceiveHome',
     component: Main,
     children: [
       {

@@ -7,7 +7,7 @@
 import ActivityComp from '_c/activity'
 
 export default {
-  name: 'activity',
+  name: 'activityPage',
   components: { ActivityComp }
 }
 </script>
