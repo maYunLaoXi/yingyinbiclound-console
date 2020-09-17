@@ -103,15 +103,18 @@ export default {
         }
       })
     },
-    mapObj2Txt(obj) {
+    mapObj2Txt (obj) {
       let str = ''
-      for(let index in obj) {
-        if(index === 'address') {
-          str = str + 'address: ' + this.mapObj2Txt(obj[index])
-          str + '\n'
+      for (let index in obj) {
+        if (index === 'address' && obj[index]) {
+          let add = ''
+          for (let i in obj[index]) {
+            add = add + `\n   ${i}: ${obj[index][i]}`
+          }
+          str = str + '\n address: ' + add + '\n'
         } else {
           const content = typeof obj[index] === 'string' ? obj[index] : index
-          str = str + `${index}: ${content}`
+          str = str + `${index}: ${content}\n`
         }
       }
       return str
