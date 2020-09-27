@@ -2,8 +2,8 @@ import axios from '@/libs/api.request'
 import { appid, secret } from '../../account/index'
 import store from '@/store'
 
-const env = 'development-zgtnu'
-// const env = 'yingyingbi-omlzp'
+// const env = 'development-zgtnu'
+const env = 'yingyingbi-omlzp'
 
 export const getAccessToken = () => {
   return axios.request({
