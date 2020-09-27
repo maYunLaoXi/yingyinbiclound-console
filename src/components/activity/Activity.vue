@@ -18,6 +18,8 @@
         :src="srcObj.url" :key="srcObj.width + srcObjIndex"
         @click="goShow(srcObj.url, item.photo)"
       >
+      <br />
+      <Button type="info" @click="dowloadImg(item)">dowload</Button>
     </div>
     <Page :total="total" show-elevator @on-change="changePage" />
     <image-show :url.sync="showUrl" />
@@ -27,6 +29,7 @@
 import { updateDb, invokeCloudFunction } from '@/api/wx'
 import ImageShow from '_c/image-show'
 import { readableTime } from 'f-com/utils'
+import dowloadImage from 'f-com/dowload/image'
 
 export default {
   name: 'activity',
@@ -87,6 +90,34 @@ export default {
     },
     changePage (page) {
       this.getData(page)
+    },
+    dowloadImg (item) {
+      let src = []
+      item.photo.forEach(item => src.push(item.url))
+      dowloadImage({
+        src,
+        zip: true,
+        zipAnothers: {
+          name: 'yingyingbi.txt',
+          content: this.mapObj2Txt(item)
+        }
+      })
+    },
+    mapObj2Txt (obj) {
+      let str = ''
+      for (let index in obj) {
+        if (index === 'address' && obj[index]) {
+          let add = ''
+          for (let i in obj[index]) {
+            add = add + `\n   ${i}: ${obj[index][i]}`
+          }
+          str = str + '\n address: ' + add + '\n'
+        } else {
+          const content = typeof obj[index] === 'string' ? obj[index] : index
+          str = str + `${index}: ${content}\n`
+        }
+      }
+      return str
     }
   }
 }
