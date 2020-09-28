@@ -30,7 +30,7 @@
 <script>
 import { updateDb, invokeCloudFunction } from '@/api/wx'
 import ImageShow from '_c/image-show'
-import { readableTime } from 'f-com/utils'
+import { readableTime } from 'f-com'
 
 export default {
   name: 'photographyClass',

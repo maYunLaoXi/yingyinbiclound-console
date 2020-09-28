@@ -28,8 +28,8 @@
 <script>
 import { updateDb, invokeCloudFunction } from '@/api/wx'
 import ImageShow from '_c/image-show'
-import { readableTime } from 'f-com/utils'
-import dowloadImage from 'f-com/dowload/image'
+import JsZip from 'jszip'
+import { dowloadImage, readableTime } from 'f-com'
 
 export default {
   name: 'activity',
@@ -100,7 +100,8 @@ export default {
         zipAnothers: {
           name: 'yingyingbi.txt',
           content: this.mapObj2Txt(item)
-        }
+        },
+        JsZip
       })
     },
     mapObj2Txt (obj) {
