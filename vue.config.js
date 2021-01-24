@@ -52,6 +52,10 @@ module.exports = {
         target: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/',
         ws: true,
         changeOrigin: true
+      },
+      '/ying': {
+        target: 'http://106.53.221.234:8090/',
+        changeOrigin: true
       }
     }
   }

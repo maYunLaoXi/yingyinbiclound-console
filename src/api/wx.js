@@ -2,8 +2,9 @@ import axios from '@/libs/api.request'
 import { appid, secret } from '../../account/index'
 import store from '@/store'
 
-// const env = 'development-zgtnu'
-const env = 'yingyingbi-omlzp'
+export const wxEnv = () => {
+  return store.state.wxPersist.env
+}
 
 export const getAccessToken = () => {
   return axios.request({
@@ -27,7 +28,7 @@ export const databaseQuery = query => {
       access_token: store.state.wxPersist.accessToken
     },
     data: {
-      env,
+      env: wxEnv(),
       query
     }
   })
@@ -43,7 +44,7 @@ export const updateDb = query => {
       access_token: store.state.wxPersist.accessToken
     },
     data: {
-      env,
+      env: wxEnv(),
       query
     }
   })
@@ -56,7 +57,7 @@ export const invokeCloudFunction = params => {
     url: '/tencent/tcb/invokecloudfunction',
     params: {
       access_token: store.state.wxPersist.accessToken,
-      env,
+      env: wxEnv(),
       name
     },
     data

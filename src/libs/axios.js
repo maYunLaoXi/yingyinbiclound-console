@@ -19,9 +19,11 @@ class HttpRequest {
   }
   getInsideConfig () {
     const config = {
-      baseURL: this.baseUrl,
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Headers': 'Authorization, Origin, X-Requested-With, Content-Type, Accept',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, DELETE'
       }
     }
     return config
@@ -35,6 +37,14 @@ class HttpRequest {
   interceptors (instance, url) {
     // 请求拦截
     instance.interceptors.request.use(config => {
+      if (process.env.NODE_ENV === 'production') {
+        let rurl = config.url
+        let baseUrl = ''
+        if (rurl.match('ying/')) baseUrl = 'http://106.53.221.234:8090/'
+        else if (rurl.match('tencent/')) baseUrl = 'https://api.weixin.qq.com'
+        else baseUrl = 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/'
+        config.url = baseUrl + rurl
+      }
       // 添加全局的loading...
       if (!Object.keys(this.queue).length) {
         // Spin.show() // 不建议开启，因为界面不友好

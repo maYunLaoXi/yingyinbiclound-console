@@ -1,7 +1,10 @@
 <template>
   <div>
     <Button type="primary" @click="getAccessToken">getAccessToken</Button>
-    <!-- <Button type="primary" @click="getDb">getDb</Button> -->
+    <Select @on-change="changeWxEnv" v-model="wxEnv" placeholder="切换环境" style="width: 200px">
+        <Option value="development-zgtnu">dev</Option>
+        <Option value="yingyingbi-omlzp">prod</Option>
+    </Select>
     <Row :gutter="20">
       <i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
         <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
@@ -73,7 +76,8 @@ export default {
         Sat: 1322,
         Sun: 1324
       },
-      activityData: []
+      activityData: [],
+      wxEnv: 'development-zgtnu'
     }
   },
   mounted () {
@@ -83,6 +87,9 @@ export default {
     ...mapActions({
       getAccessToken: 'getAccessTokenFromApi'
     }),
+    changeWxEnv (value) {
+      this.$store.commit('setEnv', value)
+    },
     getDb () {
       databaseQuery('db.collection("activity-data").get()').then(res => {
         console.log(res)

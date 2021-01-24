@@ -6,7 +6,7 @@ export const login = ({ userName, password }) => {
     password
   }
   return axios.request({
-    url: 'iview-admin/login',
+    url: 'ying/user/login',
     data,
     method: 'post'
   })
@@ -14,7 +14,7 @@ export const login = ({ userName, password }) => {
 
 export const getUserInfo = (token) => {
   return axios.request({
-    url: 'iview-admin/get_info',
+    url: 'ying/user/get_info',
     params: {
       token
     },
