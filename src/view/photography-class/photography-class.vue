@@ -12,6 +12,9 @@
         check: <i-switch :value="item.check" @on-change="changeSwitch('check', item, $event)" />&nbsp;&nbsp;&nbsp;
         pass: <i-switch :value="item.pass" @on-change="changeSwitch('pass', item, $event)" />&nbsp;&nbsp;&nbsp;
         参加活动：<i-switch :value="item.activity.isJoinDevelop" disabled />
+        <span v-if="!!item.subcrible">
+          subscrible: <i-switch :disabled="item.sendMessage" :value="item.sendMessage" @on-change="sendMessage(item)" />&nbsp;&nbsp;&nbsp;
+        </span>
       </div>
       <img
         class="img"
@@ -73,6 +76,20 @@ export default {
       const res = await updateDb(`db.collection("photography-class").doc("${(item._id)}").update({data:{${name}:${value}}})`)
       if (res.data.errcode === 0) this.$Message.success(`已将状态改为${value}`)
       else this.$Message.error('err')
+    },
+    async sendMessage (item) {
+      const { subcrible: templateId, _openid } = item
+      const res = await invokeCloudFunction({
+        name: 'serverapi',
+        data: {
+          action: 'sendSubscribeMessage',
+          templateId,
+          _openid
+        }
+      })
+      if (res.data.errmsg === 'ok') {
+        this.changeSwitch('sendMessage', item, true)
+      }
     },
     goShow (url, list) {
       this.showUrl = url

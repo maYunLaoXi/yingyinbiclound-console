@@ -11,6 +11,9 @@
         是否同意展示(show): <i-switch :value="item.show" disabled />&nbsp;&nbsp;&nbsp;
         check: <i-switch :value="item.check" @on-change="changeShow('check', item, $event)" />&nbsp;&nbsp;&nbsp;
         pass: <i-switch :value="item.pass" @on-change="changeShow('pass', item, $event)" />&nbsp;&nbsp;&nbsp;
+        <span v-if="!!item.subcrible">
+          subscrible: <i-switch :disabled="item.sendMessage" :value="item.sendMessage" @on-change="sendMessage(item)" />&nbsp;&nbsp;&nbsp;
+        </span>
       </div>
       <img
         class="img"
@@ -78,10 +81,9 @@ export default {
     },
     changeShow (name, item, value) {
       updateDb(`db.collection("${this.collection}").doc("${(item._id)}").update({data:{${name}:${value}}})`).then(res => {
-        if (res.data.errcode === 0) this.$Message.success(`已将状态改为${value}`)
+        if (res.data.errcode === 0) this.$Message.success(`已将${name}状态改为${value}`)
         else this.$Message.error('err')
-      // eslint-disable-next-line handle-callback-err
-      }).catch(err => {
+      }).catch(_err => {
         this.$Message.error('err')
       })
     },
@@ -103,6 +105,20 @@ export default {
         },
         JsZip
       })
+    },
+    async sendMessage (item) {
+      const { subcrible: templateId, _openid } = item
+      const res = await invokeCloudFunction({
+        name: 'serverapi',
+        data: {
+          action: 'sendSubscribeMessage',
+          templateId,
+          _openid
+        }
+      })
+      if (res.data.errmsg === 'ok') {
+        this.changeShow('sendMessage', item, true)
+      }
     },
     mapObj2Txt (obj) {
       let str = ''
