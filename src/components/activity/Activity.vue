@@ -80,7 +80,8 @@ export default {
       setTimeout(() => { this.data = data }, 20)
     },
     changeShow (name, item, value) {
-      updateDb(`db.collection("${this.collection}").doc("${(item._id)}").update({data :{${name}:${value}}})`).then(res => {
+      let query = `db.collection("${this.collection}").doc("${(item._id)}").update({data :{${name}:${value}}})`
+      updateDb(query).then(res => {
         if (res.data.errcode === 0) this.$Message.success(`已将${name}状态改为${value}`)
         else this.$Message.error('err')
       }).catch(_err => {

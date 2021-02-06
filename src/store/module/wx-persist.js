@@ -5,6 +5,9 @@ export default {
     accessToken: '',
     env: 'development-zgtnu'
   },
+  getters: {
+    wxEnv: state => state.env
+  },
   mutations: {
     setAccessToken (state, token) {
       state.accessToken = token

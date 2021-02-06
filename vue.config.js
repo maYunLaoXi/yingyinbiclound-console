@@ -13,7 +13,7 @@ const resolve = dir => {
 // 需要将它改为'/my-app/'
 // iview-admin线上演示打包路径： https://file.iviewui.com/admin-dist/
 const BASE_URL = process.env.NODE_ENV === 'production'
-  ? 'http://192.168.1.51:8090'
+  ? '/'
   : '/'
 
 module.exports = {
@@ -41,9 +41,13 @@ module.exports = {
     port: 8068,
     proxy: {
       '/tencent': {
-        target: 'http://192.168.1.51:8090',
+        // target: 'https://api.weixin.qq.com',
+        target: 'http://106.53.221.234:8090',
         ws: true,
         changeOrigin: true
+        // pathRewrite: {
+        //   '^/tencent': '/'
+        // }
       },
       '/iview-admin': {
         target: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/',
