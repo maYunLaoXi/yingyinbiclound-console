@@ -35,7 +35,7 @@ export const databaseQuery = query => {
 }
 
 // update collection doucment
-export const updateDb = query => {
+export const updateDb = (query = '') => {
   return axios.request({
     method: 'POST',
     url: '/tencent/tcb/databaseupdate',
@@ -45,7 +45,7 @@ export const updateDb = query => {
     },
     data: {
       env: wxEnv(),
-      query
+      query: query.replace(/\./g, '#')
     }
   })
 }
