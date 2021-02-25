@@ -15,6 +15,7 @@
         <span v-if="!!item.subcrible">
           subscrible: <i-switch :disabled="item.sendMessage" :value="item.sendMessage" @on-change="sendMessage(item)" />&nbsp;&nbsp;&nbsp;
         </span>
+        后台控制是否展示: <i-switch true-color="#13ce66" false-color="#b7a2a2" :value="item.yShow" @on-change="handleIsHide(item, $event)" />
       </div>
       <img
         class="img"
@@ -90,6 +91,9 @@ export default {
       if (res.data.errmsg === 'ok') {
         this.changeSwitch('sendMessage', item, true)
       }
+    },
+    handleIsHide (item, value) {
+      this.changeSwitch('yShow', item, value)
     },
     goShow (url, list) {
       this.showUrl = url

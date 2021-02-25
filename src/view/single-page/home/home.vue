@@ -1,10 +1,11 @@
 <template>
   <div>
+    <i-switch v-model="isProduction" size="large" @on-change="setWxEnv">
+        <span slot="open">开发</span>
+        <span slot="close">生产</span>
+    </i-switch>
     <Button type="primary" @click="getAccessToken">getAccessToken</Button>
-    <Select @on-change="changeWxEnv" v-model="wxEnv" placeholder="切换环境" style="width: 200px">
-        <Option value="development-zgtnu">dev</Option>
-        <Option value="yingyingbi-omlzp">prod</Option>
-    </Select>
+    隐藏活动: <i-switch size="large" @on-change="hideActivity" />
     <Row :gutter="20">
       <i-col :xs="12" :md="8" :lg="4" v-for="(infor, i) in inforCardData" :key="`infor-${i}`" style="height: 120px;padding-bottom: 10px;">
         <infor-card shadow :color="infor.color" :icon="infor.icon" :icon-size="36">
@@ -39,7 +40,7 @@ import CountTo from '_c/count-to'
 import { ChartPie, ChartBar } from '_c/charts'
 import Example from './example.vue'
 import { mapActions } from 'vuex'
-import { databaseQuery } from '@/api/wx'
+import { databaseQuery, updateDb } from '@/api/wx'
 
 export default {
   name: 'home',
@@ -77,11 +78,19 @@ export default {
         Sun: 1324
       },
       activityData: [],
-      wxEnv: 'development-zgtnu'
+      wxEnv: 'development-zgtnu',
+      isProduction: false
     }
   },
-  mounted () {
-    //
+  computed: {
+    env () {
+      return this.$store.getters.wxEnv
+    }
+  },
+  created () {
+    const { wxEnv } = this.$store.getters
+    this.wxEnv = wxEnv
+    this.isProduction = wxEnv === 'yingyingbi-omlzp'
   },
   methods: {
     ...mapActions({
@@ -89,6 +98,11 @@ export default {
     }),
     changeWxEnv (value) {
       this.$store.commit('setEnv', value)
+    },
+    setWxEnv (val) {
+      let env = 'development-zgtnu'
+      if (val) env = 'yingyingbi-omlzp'
+      this.changeWxEnv(env)
     },
     getDb () {
       databaseQuery('db.collection("activity-data").get()').then(res => {
@@ -103,6 +117,11 @@ export default {
           this.activityData = result
         }
       })
+    },
+    async hideActivity (val) {
+      const res = await updateDb(`db.collection("activity").where({open: true}).update({data:{show: ${val}}})`)
+      if (res.data.errcode === 0) this.$Message.success(`已将 show 状态改为${val}`)
+      else this.$Message.error('err')
     }
   }
 }
