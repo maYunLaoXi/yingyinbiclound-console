@@ -41,9 +41,13 @@ module.exports = {
     port: 8068,
     proxy: {
       '/tencent': {
-        target: 'http://192.168.1.51:8090',
+        // target: 'http://192.168.1.51:8090',
+        target: 'https://api.weixin.qq.com',
         ws: true,
-        changeOrigin: true
+        changeOrigin: true,
+        pathRewrite: {
+          '^/tencent': '/'
+        }
       },
       '/iview-admin': {
         target: 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/',
@@ -51,8 +55,17 @@ module.exports = {
         changeOrigin: true
       },
       '/ying': {
-        target: 'http://106.53.221.234:8090/',
+        // target: 'http://106.53.221.234:8090/',
+        target: 'http://192.168.1.51:8090',
         changeOrigin: true
+      },
+      '/pqiniu': {
+        target: 'https://rsf.qbox.me',
+        changeOrigin: true,
+        ws: true,
+        pathRewrite: {
+          '^/pqiniu': '/'
+        }
       }
     }
   }

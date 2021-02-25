@@ -58,25 +58,6 @@ export default [
       icon: 'ios-book'
     }
   },
-  // {
-  //   path: '/join',
-  //   name: 'join',
-  //   component: Main,
-  //   meta: {
-  //     hideInBread: true
-  //   },
-  //   children: [
-  //     {
-  //       path: 'join_page',
-  //       name: 'join_page',
-  //       meta: {
-  //         icon: '_qq',
-  //         title: 'QQ群'
-  //       },
-  //       component: () => import('@/view/join-page.vue')
-  //     }
-  //   ]
-  // },
   {
     path: '/activity',
     name: 'activity',
@@ -122,6 +103,22 @@ export default [
           title: '摄影作品'
         },
         component: _ => import('@/view/photography-class/photography-class.vue')
+      }
+    ]
+  },
+  {
+    path: '/qiniu',
+    name: 'qiniu',
+    component: Main,
+    children: [
+      {
+        path: 'qiniu_photo',
+        name: 'qiniuPhoto',
+        meta: {
+          icon: 'md-aperture',
+          title: '七牛图片'
+        },
+        component: _ => import('@/view/qiniu/qiniu-photo.vue')
       }
     ]
   },
