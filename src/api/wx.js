@@ -45,7 +45,7 @@ export const updateDb = (query = '') => {
     },
     data: {
       env: wxEnv(),
-      query: query.replace(/\./g, '#')
+      query: query
     }
   })
 }

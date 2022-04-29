@@ -56,7 +56,7 @@ module.exports = {
       },
       '/ying': {
         // target: 'http://106.53.221.234:8090/',
-        target: 'http://192.168.1.51:8090',
+        target: 'http://localhost:8090',
         changeOrigin: true
       },
       '/pqiniu': {
